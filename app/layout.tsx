@@ -2,6 +2,7 @@ import './globals.css';
 import Navbar from './components/Navbar/Navbar';
 import { Nunito } from 'next/font/google';
 import ClientOnly from './components/ClientOnly';
+import Modal from './components/Modals/Modal';
 
 export const metadata = {
   title: 'Airbnb',
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='en'>
       <body className={fonts.className}>
         <ClientOnly>
+          <Modal isOpen title='Hello world' actionLabel='Submit' />
           <Navbar />
         </ClientOnly>
         {children}

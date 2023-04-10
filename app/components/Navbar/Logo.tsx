@@ -7,6 +7,7 @@ function Logo({}: Props) {
   const router = useRouter();
   return (
     <Image
+      onClick={() => router.push('/')}
       width={100}
       height={100}
       className='hidden md:block cursor-pointer'

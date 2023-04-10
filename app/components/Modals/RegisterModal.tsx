@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import Modal from './Modal';
@@ -11,10 +11,12 @@ import Input from '../inputs/Input';
 import { toast } from 'react-hot-toast';
 import Button from '../Button';
 import { signIn } from 'next-auth/react';
+import useLoginModal from '@/app/hooks/useLoginModal';
 type Props = {};
 
 function RegisterModal({}: Props) {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -38,7 +40,10 @@ function RegisterModal({}: Props) {
       .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };
-
+  const toggle = useCallback(() => {
+    loginModal.onOpen();
+    registerModal.onClose();
+  }, [loginModal, registerModal]);
   const bodyContent = (
     <div className='flex flex-col gap-4'>
       <Heading title='Welcome to Airbnb' subtitle='Create an account!' />
@@ -88,9 +93,7 @@ function RegisterModal({}: Props) {
       <div className='text-neutral-500 text-center mt-4 font-light'>
         <div className='justify-center flex flex-row items-center gap-2'>
           <div>Already have an account?</div>
-          <div
-            className='text-neutral-800 cursor-pointer hover:underline'
-            onClick={registerModal.onClose}>
+          <div className='text-neutral-800 cursor-pointer hover:underline' onClick={toggle}>
             Log in
           </div>
         </div>

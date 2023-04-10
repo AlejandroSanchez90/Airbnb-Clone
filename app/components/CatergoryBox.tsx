@@ -1,3 +1,4 @@
+'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback } from 'react';
 import { IconType } from 'react-icons';
@@ -8,7 +9,7 @@ type Props = {
   selected?: boolean;
 };
 
-function CatergoryBox({ label, icon: Icon, description, selected }: Props) {
+function CatergoryBox({ label, icon: Icon, selected }: Props) {
   const router = useRouter();
   const params = useSearchParams();
 

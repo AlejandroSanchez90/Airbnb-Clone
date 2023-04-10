@@ -15,7 +15,7 @@ import {
 import { FaSkiing } from 'react-icons/fa';
 import { BsSnow } from 'react-icons/bs';
 import { MdOutlineVilla } from 'react-icons/md';
-import CatergoryBox from '../CatergoryBox';
+import CategoryBox from '../CategoryBox';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 type Props = {};
@@ -112,7 +112,7 @@ function Categories({}: Props) {
     <Container>
       <div className='pt-4 flex flex-row items-center justify-between overflow-x-auto '>
         {categories.map((item) => (
-          <CatergoryBox
+          <CategoryBox
             key={item.label}
             label={item.label}
             icon={item.icon}

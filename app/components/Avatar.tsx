@@ -2,15 +2,17 @@
 
 import Image from 'next/image';
 
-type Props = {};
+type Props = {
+  image?: string | null | undefined;
+};
 
-function Avatar({}: Props) {
+function Avatar({ image }: Props) {
   return (
     <Image
       className='rounded-full'
       width={30}
       height={30}
-      src='/images/placeholder.jpg'
+      src={image ? image : '/images/placeholder.jpg'}
       alt='Avatar'
     />
   );

@@ -10,6 +10,7 @@ import CountrySelect from '../inputs/CountrySelect';
 import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
+import Input from '../inputs/Input';
 type Props = {};
 
 enum STEPS {
@@ -24,6 +25,7 @@ function RentModal({}: Props) {
   const rentModal = useRentModal();
   const [step, setstep] = useState(STEPS.CATEGORY);
 
+  const [isLoading, setIsLoading] = useState(false);
   const onBack = () => {
     setstep((prev) => prev - 1);
   };
@@ -50,7 +52,7 @@ function RentModal({}: Props) {
     handleSubmit,
     setValue,
     watch,
-    formState: errors,
+    formState: { errors },
     reset,
   } = useForm<FieldValues>({
     defaultValues: {
@@ -149,6 +151,23 @@ function RentModal({}: Props) {
           subtitle='Photos help guests imagine what it will be like to stay at your place.'
         />
         <ImageUpload value={imageSrc} onChange={(value) => setCustomValue('imageSrc', value)} />
+      </div>
+    );
+  }
+
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className='flex flex-col gap-8'>
+        <Heading title='How would you describe your place?' subtitle='Short and sweet works best' />
+        <Input id='title' label='Title' disabled={isLoading} register={register} errors={errors} />
+        <hr />
+        <Input
+          id='description'
+          label='Description'
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+        />
       </div>
     );
   }

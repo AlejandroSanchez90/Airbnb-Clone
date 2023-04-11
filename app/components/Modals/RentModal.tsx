@@ -5,12 +5,15 @@ import useRentModal from '@/app/hooks/useRentModal';
 import Heading from '../Heading';
 import { categories } from '../Navbar/Categories';
 import CategoryInput from '../inputs/CategoryInput';
-import { FieldValues, useForm } from 'react-hook-form';
+import { FieldValues, useForm, SubmitHandler } from 'react-hook-form';
 import CountrySelect from '../inputs/CountrySelect';
 import dynamic from 'next/dynamic';
 import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 type Props = {};
 
 enum STEPS {
@@ -22,15 +25,41 @@ enum STEPS {
   PRICE = 5,
 }
 function RentModal({}: Props) {
+  const router = useRouter();
   const rentModal = useRentModal();
-  const [step, setstep] = useState(STEPS.CATEGORY);
+  const [step, setStep] = useState(STEPS.CATEGORY);
 
   const [isLoading, setIsLoading] = useState(false);
   const onBack = () => {
-    setstep((prev) => prev - 1);
+    setStep((prev) => prev - 1);
   };
   const onNext = () => {
-    setstep((prev) => prev + 1);
+    setStep((prev) => prev + 1);
+  };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+    setIsLoading(true);
+
+    axios
+      .post('/api/listings', data)
+      .then(() => {
+        toast.success('Listing created!');
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch((err) => {
+        toast.error('Something went wrong!');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const actionLabel = useMemo(() => {
@@ -84,6 +113,8 @@ function RentModal({}: Props) {
       shouldValidate: true,
     });
   };
+
+  // Step Category
   let bodyContent = (
     <div>
       <div className='flex flex-col gap-8'>
@@ -142,7 +173,6 @@ function RentModal({}: Props) {
       </div>
     );
   }
-
   if (step === STEPS.IMAGES) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -154,7 +184,6 @@ function RentModal({}: Props) {
       </div>
     );
   }
-
   if (step === STEPS.DESCRIPTION) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -171,7 +200,6 @@ function RentModal({}: Props) {
       </div>
     );
   }
-
   if (step === STEPS.PRICE) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -194,7 +222,7 @@ function RentModal({}: Props) {
       title='Airbnb your home!'
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryLabel}

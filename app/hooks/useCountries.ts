@@ -2,8 +2,6 @@ import countries from 'world-countries';
 
 type Props = {};
 const formattedCountries = countries.map((country) => {
-  console.log(country);
-
   return {
     value: country.cca2,
     label: country.name.common,

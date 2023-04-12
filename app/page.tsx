@@ -4,6 +4,7 @@ import ClientOnly from './components/ClientOnly';
 import Container from './components/Container';
 import EmptyState from './components/EmptyState';
 import ListingCard from './components/listings/ListingCard';
+import { safeListing } from './types';
 
 export default async function Home() {
   const listings = await getListings();

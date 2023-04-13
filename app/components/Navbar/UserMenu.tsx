@@ -53,10 +53,10 @@ function UserMenu({ currentUser }: Props) {
             {currentUser ? (
               <>
                 <MenuItem onClick={() => router.push('/trips')} label='My trips' />
-                <MenuItem onClick={() => {}} label='My favorites' />
-                <MenuItem onClick={() => {}} label='My reservations' />
-                <MenuItem onClick={() => {}} label='My properties' />
-                <MenuItem onClick={rentModal.onOpen} label='Airbnb my home' />
+                <MenuItem onClick={() => {}} label='My Favorites' />
+                <MenuItem onClick={() => router.push('/reservations')} label='My Reservations' />
+                <MenuItem onClick={() => {}} label='My Properties' />
+                <MenuItem onClick={rentModal.onOpen} label='Airbnb my Home' />
                 <hr />
                 <MenuItem onClick={() => signOut()} label='Logout' />
               </>

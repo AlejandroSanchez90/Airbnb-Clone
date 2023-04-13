@@ -31,11 +31,13 @@ function RegisterModal({}: Props) {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
     setIsLoading(true);
     axios
       .post('/api/register', data)
-      .then((res) => registerModal.onClose())
+      .then((res) => {
+        registerModal.onClose();
+        loginModal.onOpen();
+      })
       .catch((err) => toast.error(err.message))
       .finally(() => setIsLoading(false));
   };

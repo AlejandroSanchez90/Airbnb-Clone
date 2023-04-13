@@ -63,7 +63,7 @@ function ListingClient({ listing, currentUser, reservation = [] }: Props) {
       .then(() => {
         toast.success('Reservation created successfully!');
         setDateRange(initialDateRange);
-        router.refresh();
+        router.push('/trips');
       })
       .catch(() => {
         toast.error('Something went wrong!');

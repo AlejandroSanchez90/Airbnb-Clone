@@ -7,8 +7,6 @@ interface IParams {
 }
 
 export async function POST(request: Request, { params }: { params: IParams }) {
-  console.log('PARAMS', params);
-
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -16,7 +14,6 @@ export async function POST(request: Request, { params }: { params: IParams }) {
   }
 
   const { listingid } = params;
-  console.log('LISTINGID', listingid);
 
   if (!listingid || typeof listingid !== 'string') {
     throw new Error('Invalid ID');

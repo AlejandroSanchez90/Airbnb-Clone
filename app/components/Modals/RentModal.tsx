@@ -38,8 +38,6 @@ function RentModal({}: Props) {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
-
     if (step !== STEPS.PRICE) {
       return onNext();
     }

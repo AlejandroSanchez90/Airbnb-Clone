@@ -31,7 +31,6 @@ function RegisterModal({}: Props) {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
 
     setIsLoading(true);
     axios

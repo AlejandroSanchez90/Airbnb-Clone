@@ -53,7 +53,7 @@ function ListingCard({
   const reservationDate = useMemo(() => {
     if (!reservation) return null;
 
-    const start = new Date(reservation.startdate);
+    const start = new Date(reservation.startDate);
     const end = new Date(reservation.endDate);
 
     return `${format(start, 'PP')} - ${format(end, 'PP')}`;

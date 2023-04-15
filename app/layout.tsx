@@ -7,6 +7,10 @@ import ToasterProvider from './providers/ToasterProvider';
 import LoginModal from './components/Modals/LoginModal';
 import { getCurrentUser } from './actions/getCurrentUser';
 import RentModal from './components/Modals/RentModal';
+import { useCallback, useMemo } from 'react';
+import getUser from './actions/getUser';
+import { SafeUser } from './types';
+import { User } from '@prisma/client';
 
 export const metadata = {
   title: 'Airbnb',
@@ -16,6 +20,7 @@ const fonts = Nunito({ subsets: ['latin'] });
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const currentUser = await getCurrentUser();
+
   return (
     <html lang='en'>
       <body className={fonts.className}>

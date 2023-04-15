@@ -32,13 +32,20 @@ function RegisterModal({}: Props) {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
+
     axios
       .post('/api/register', data)
       .then((res) => {
+        if (res.data.error) {
+          toast.error(res.data.error);
+          return;
+        }
         registerModal.onClose();
         loginModal.onOpen();
       })
-      .catch((err) => toast.error(err.message))
+      .catch((err) => {
+        toast.error('Something went wrong');
+      })
       .finally(() => setIsLoading(false));
   };
   const toggle = useCallback(() => {

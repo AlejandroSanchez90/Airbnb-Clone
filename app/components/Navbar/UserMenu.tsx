@@ -30,6 +30,11 @@ function UserMenu({ currentUser }: Props) {
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
+
+  const goTo = useCallback((path: string) => {
+    router.push(path);
+    setIsOpen(false);
+  }, []);
   return (
     <div className='relative'>
       <div className='flex flex-row items-center gap-3'>
@@ -52,18 +57,42 @@ function UserMenu({ currentUser }: Props) {
           <div className='flex flex-col cursor-pointer'>
             {currentUser ? (
               <>
-                <MenuItem onClick={() => router.push('/trips')} label='My trips' />
-                <MenuItem onClick={() => router.push('/favorites')} label='My Favorites' />
-                <MenuItem onClick={() => router.push('/reservations')} label='My Reservations' />
-                <MenuItem onClick={() => router.push('/properties')} label='My Properties' />
+                <MenuItem
+                  onClick={() => {
+                    goTo('/trips');
+                  }}
+                  label='My trips'
+                />
+                <MenuItem onClick={() => goTo('/favorites')} label='My Favorites' />
+                <MenuItem onClick={() => goTo('/reservations')} label='My Reservations' />
+                <MenuItem onClick={() => goTo('/properties')} label='My Properties' />
                 <MenuItem onClick={rentModal.onOpen} label='Airbnb my Home' />
                 <hr />
-                <MenuItem onClick={() => signOut()} label='Logout' />
+
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    signOut();
+                  }}
+                  label='Logout'
+                />
               </>
             ) : (
               <>
-                <MenuItem onClick={loginModal.onOpen} label='Login' />
-                <MenuItem onClick={registerModal.onOpen} label='Sign Up' />
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    loginModal.onOpen();
+                  }}
+                  label='Login'
+                />
+                <MenuItem
+                  onClick={() => {
+                    setIsOpen(false);
+                    registerModal.onOpen();
+                  }}
+                  label='Sign Up'
+                />
               </>
             )}
           </div>

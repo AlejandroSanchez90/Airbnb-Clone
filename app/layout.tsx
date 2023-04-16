@@ -11,6 +11,7 @@ import { useCallback, useMemo } from 'react';
 import getUser from './actions/getUser';
 import { SafeUser } from './types';
 import { User } from '@prisma/client';
+import SearchModal from './components/Modals/SearchModal';
 
 export const metadata = {
   title: 'Airbnb',
@@ -29,6 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <LoginModal />
           <RegisterModal />
           <RentModal />
+          <SearchModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
         <div className='pb-20 pt-28'>{children}</div>

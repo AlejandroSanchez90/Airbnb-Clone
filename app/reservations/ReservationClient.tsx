@@ -32,7 +32,7 @@ function ReservationClient({ currentUser, reservations }: Props) {
           setDeletingId('');
         });
     },
-    [setDeletingId]
+    [setDeletingId, router]
   );
   return (
     <Container>
